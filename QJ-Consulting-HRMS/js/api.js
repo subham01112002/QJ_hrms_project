@@ -1,4 +1,4 @@
-let sortingOrder = document.getElementById("sorting-order");
+/*let sortingOrder = document.getElementById("sorting-order");
 let inMonth = document.getElementById("in-month");
 let inYear = document.getElementById("in-year");
 
@@ -152,7 +152,7 @@ async function getProjects() {
                 
 
                 column.appendChild(button);
-            }*/
+            }
                 let data1=data[i][1]
                 let time=timeArray[0]+" Hrs "+timeArray[1]+" Mins ";  
           if(j==0){
@@ -166,7 +166,7 @@ async function getProjects() {
                 text1.setAttribute("class", "font-16");
                 text1.setAttribute('onclick', 'pro(this.value)');
                 text1.setAttribute("readonly", "");
-               // text1.setAttribute("onclick","getPrimaryTasks();");*/
+               // text1.setAttribute("onclick","getPrimaryTasks();");
                 column.appendChild(text1);
             } 
             if(j==1){
@@ -192,7 +192,7 @@ for(let i=0; i<l; i++) {
     
         document.getElementById("proj").rows[i].cells[0].addEventListener("click",getPrimaryTasks());;
     
-}*/
+}
  
 
 async function pro(x){
@@ -254,7 +254,7 @@ async function pro(x){
                 text1.setAttribute("class", "font-16");
                 text1.setAttribute('onclick', 'data_em(this.value)');
                 text1.setAttribute("readonly", "");
-               // text1.setAttribute("onclick","getPrimaryTasks();");*/
+               // text1.setAttribute("onclick","getPrimaryTasks();");
                 column.appendChild(text1);
                 } 
                 if(j==1){
@@ -370,3 +370,52 @@ function genTable() {
         tableBody3.appendChild(row);
     }
 }
+*/
+const employeeSelect = document.getElementById('employee-select');
+    const totalTimeCell = document.getElementById('total-time');
+    const projectRows = document.querySelectorAll('.project-row');
+    const taskRows = document.querySelectorAll('.task-row');
+    const expandCollapseBtns = document.querySelectorAll('.expand-collapse');
+    const projectTimeCells = document.querySelectorAll('#project-time-1');
+    const taskTimeCells = document.querySelectorAll('#task-time-1');
+
+    employeeSelect.addEventListener('change', () => {
+      const selectedEmployee = employeeSelect.value;
+      alert(selectedEmployee);
+      // Calculate and display total time for the selected employee
+      updateTotalTime(selectedEmployee);
+    });
+
+    expandCollapseBtns.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        const row = btn.closest('tr');
+        const isProjectRow = row.classList.contains('project-row');
+        const isTaskRow = row.classList.contains('task-row');
+
+        if (isProjectRow) {
+          row.classList.toggle('active');
+          row.nextElementSibling.style.display = row.classList.contains('active') ? 'table-row' : 'none';
+        } else if (isTaskRow) {
+          row.classList.toggle('active');
+          row.nextElementSibling.style.display = row.classList.contains('active') ? 'table-row' : 'none';
+        }
+
+        btn.textContent = row.classList.contains('active') ? '-' : '+';
+      });
+    });
+
+    function updateTotalTime(employeetotaltime) {
+        var myArray = employeetotaltime.split("-");
+      // Calculate and update the total time for the selected employee
+      totalTimeCell.textContent = myArray[2];
+    }
+
+    function updateProjectTime(projectId) {
+      // Calculate and update the total time for the selected project
+      projectTimeCells[projectId - 1].textContent = '4 hours';
+    }
+
+    function updateTaskTime(taskId) {
+      // Calculate and update the total time for the selected task
+      taskTimeCells[taskId - 1].textContent = '4 hours';
+    }

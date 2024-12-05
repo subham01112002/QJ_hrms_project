@@ -171,7 +171,7 @@
                     </div>
                 </div>
             </div>
-            <div class="my-32 px-2vw overflow-x-scroll">
+            <!--<div class="my-32 px-2vw overflow-x-scroll">
                 <table class="w100-percent" id="proj">
                     <thead id="table-heading">
                         <tr>
@@ -218,10 +218,110 @@
                     <tbody id="table-body3">
                     
                     </tbody>
-                </table>
+                </table>-->
+    <table>
+  
+    <tr>
+      <th>Employee</th>
+      <th>Total Time</th>
+    </tr>
+    <tr>
+      <td>
+        
+        <select id="employee-select" class="input-field" onchange="getProjects()" style="width: 256px;">
+                                    <option selected value="">None</option>
+                                    <?php
+                                        $query = "SELECT 
+                                                    em.`emp_id`,
+                                                    em.`name`,
+                                                    SEC_TO_TIME(SUM(TIME_TO_SEC(ptm.total))) AS `total_time`
+                                                FROM
+                                                    `project_task_map` ptm
+                                                LEFT JOIN `project_employee_map` pem ON ptm.`pe_id` = pem.`pe_id`
+                                                LEFT JOIN `employee_master` em ON pem.`emp_id` = em.`emp_id`
+                                                GROUP BY
+                                                    em.`emp_id`";
+                                        $res = mysqli_query($connection, $query);
+                                        while($ar = mysqli_fetch_array($res))
+                                        {
+                                            $timeArray = explode(":", $ar['total_time']);
+                                    ?>
+                                            <option value="<?php echo $ar['emp_id']; ?>">
+                                                <?php 
+                                                echo $ar['name'] . " - " . $timeArray[0] . " Hrs " . $timeArray[1] . " Mins"; 
+                                                ?>
+                                            </option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+      </td>
+      <td id="total-time">-</td>
+    </tr>
+    <?php
+                                        $query = "SELECT 
+                                                    pm.`project_id`,
+                                                    pm.`title`
+                                                    
+                                                FROM
+                                                    `project_master` pm
+                                                INNER JOIN `project_employee_map` pem ON pm.`project_id` = pem.`project_id`
+                                                 ";
+                                        $res = mysqli_query($connection, $query);
+                                        while($ar1 = mysqli_fetch_array($res)) { ?>
+    <tr class="project-row">
+      <td>
+        <span class="expand-collapse">+</span>
+        <span><?php  echo $ar1['title'] ?></span>
+      </td>
+      <td id="project-time-1">-</td>
+    </tr>
+    <tr class="project-details">
+      <td colspan="2">
+        <table>
+          <tr class="task-row">
+            <td>
+              <span class="expand-collapse">+</span>
+              <span>Task 1</span>
+            </td>
+            <td id="task-time-1">-</td>
+          </tr>
+          <tr class="task-details">
+            <td>
+              <table>
+                <tr>
+                  <th>Date</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Total Time</th>
+                </tr>
+                <tr>
+                  <td>2023-04-15</td>
+                  <td>09:00</td>
+                  <td>11:00</td>
+                  <td>2 hours</td>
+                </tr>
+                <tr>
+                  <td>2023-04-16</td>
+                  <td>13:00</td>
+                  <td>15:00</td>
+                  <td>2 hours</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <?php } ?>
+  </table>
+
+
+  
             </div>
         </div>
         <script src="./../js/script.js"></script>
         <script src="./../js/api.js"></script>
+        
     </body>
 </html>
