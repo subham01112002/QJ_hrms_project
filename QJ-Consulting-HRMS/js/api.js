@@ -5,9 +5,10 @@ let inYear = document.getElementById("in-year");
 let tableHead = document.getElementById("table-heading");
 let tableBody = document.getElementById("table-body");
 let tableBody2 = document.getElementById("table-body2");
-
+let tableBody3= document.getElementById("table-body3");
 var data, flow = -1;
 async function getData(x) {
+    alert(document.getElementById("ptask_filter_2"));
     if(typeof x != "undefined") {
         flow = x;
     }
@@ -27,9 +28,10 @@ async function getData(x) {
         document.getElementById("ptask-filter-1").innerHTML = `<option selected value="">None</option>`;
         document.getElementById("employee-filter-1").innerHTML = `<option selected value="">None</option>`;
 
-        projectFilter = document.getElementById("project-filter-2");
-        pTaskFilter = document.getElementById("ptask-filter-2");
+        projectFilter = document.getElementById("project_filter_2");
+        pTaskFilter = document.getElementById("ptask_filter_2");
         employeeFilter = document.getElementById("employee-filter-2");
+        alert(employeeFilter+""+projectFilter+""+pTaskFilter);
     }
     else {
         return;
@@ -138,7 +140,7 @@ async function getProjects() {
         timeArray = data[i][2].split(":");
         projects.innerHTML += `<option value="${data[i][0]}">${data[i][1]} - ${timeArray[0]} Hrs ${timeArray[1]} Mins</option>`;
         const row = document.createElement("tr");
-        for(let j=0; j<1; j++) {
+        for(let j=0; j<=1; j++) {
 
             const column = document.createElement("td");
             
@@ -151,11 +153,12 @@ async function getProjects() {
 
                 column.appendChild(button);
             }*/
-                
+                let data1=data[i][1]
+                let time=timeArray[0]+" Hrs "+timeArray[1]+" Mins ";  
           if(j==0){
                 //column.textContent= data[i][1]+" - "+timeArray[0]+" Hrs "+timeArray[1]+" Mins ";
-                let data1=data[i][1]+" - "+timeArray[0]+" Hrs "+timeArray[1]+" Mins ";
-                let id_data="proj"+i;
+                
+                //let id_data="proj"+i;
                 const text1 = document.createElement("input");
                 text1.setAttribute("type", "text");
                 text1.setAttribute("value", data1);
@@ -166,6 +169,9 @@ async function getProjects() {
                // text1.setAttribute("onclick","getPrimaryTasks();");*/
                 column.appendChild(text1);
             } 
+            if(j==1){
+                column.textContent=time;
+            }
             row.appendChild(column); 
         }
         
@@ -177,9 +183,146 @@ async function getProjects() {
 /*var Table = document.getElementById('proj');
 var rowLength = Table.rows.length;*/
 
+
+/*var Table = document.getElementById('proj');
+var rowLength = Table.rows.length;
+var row = document.getElementById("proj");
+
+for(let i=0; i<l; i++) {
+    
+        document.getElementById("proj").rows[i].cells[0].addEventListener("click",getPrimaryTasks());;
+    
+}*/
+ 
+
+async function pro(x){
+        tableBody2.innerHTML = "";
+        let y=1;
+        alert(x+""+y);
+        let pro1=x;
+        document.getElementById("project_filter_2").value=document.getElementById("project_filter_2").value;
+
+        let timeArray;
+        let parameters, primaryTask;
+        if(y == 1) {
+            const employeeFilter = document.getElementById("employee-filter-2");
+            parameters = new URLSearchParams({
+                "employee-filter": employeeFilter.value
+            });
+            
+            primaryTask = document.getElementById("ptask-filter-2");
+        }
+        else {
+            const projectFilter = document.getElementById("project-filter-1");
+            parameters = new URLSearchParams({
+                "project-filter": projectFilter.value
+            });
+            document.getElementById("employee-filter-1").innerHTML = `<option selected value="">None</option>`;
+            primaryTask = document.getElementById("ptask-filter-1");
+        }
+        
+    
+        
+    
+        const url = "./../api/admin/getPrimaryTasks.php?"+parameters;
+        let response = await fetch(url);
+        data = await response.json();
+        
+        const l = data.length;
+    
+        primaryTask.innerHTML = `<option selected value="">None</option>`;
+        for(let i=0; i<l; i++) {
+            timeArray = data[i][2].split(":");
+            primaryTask.innerHTML += `<option value="${data[i][0]}">${data[i][1]} - ${timeArray[0]} Hrs ${timeArray[1]} Mins</option>`;
+            
+            const row = document.createElement("tr");
+        
+            for(let j=0; j<=1; j++) {
+
+            const column = document.createElement("td");
+            
+            
+                let data2=data[i][1]
+                let time2=timeArray[0]+" Hrs "+timeArray[1]+" Mins ";  
+                if(j==0){
+                   
+                let id_data="proj"+i;
+                const text1 = document.createElement("input");
+                text1.setAttribute("type", "text");
+                text1.setAttribute("value", data2);
+                //text1.setAttribute("id", "id_data");
+                text1.setAttribute("class", "font-16");
+                text1.setAttribute('onclick', 'data_em(this.value)');
+                text1.setAttribute("readonly", "");
+               // text1.setAttribute("onclick","getPrimaryTasks();");*/
+                column.appendChild(text1);
+                } 
+                if(j==1){
+                column.textContent=time2;
+                }
+            row.appendChild(column); 
+        }
+        
+        
+        tableBody2.appendChild(row);
+    }
+
+}
+    
+async function data_em(sub_task) {
+    alert(sub_task);
+    let x=1;
+    document.getElementById("ptask_filter_2").value=sub_task;
+    alert(document.getElementById("project_filter_2").value);
+    if(typeof x != "undefined") {
+        flow = x;
+    }
+    let projectFilter, pTaskFilter, employeeFilter;
+    if(flow == 0) {
+        document.getElementById("employee-filter-2").value = "";
+        document.getElementById("ptask-filter-2").innerHTML = `<option selected value="">None</option>`;
+        document.getElementById("project-filter-2").innerHTML = `<option selected value="">None</option>`;
+        
+
+        projectFilter = document.getElementById("project-filter-1");
+        pTaskFilter = document.getElementById("ptask-filter-1");
+        employeeFilter = document.getElementById("employee-filter-1");
+    }
+    else if(flow == 1) {
+        document.getElementById("project-filter-1").value = "";
+        document.getElementById("ptask-filter-1").innerHTML = `<option selected value="">None</option>`;
+        document.getElementById("employee-filter-1").innerHTML = `<option selected value="">None</option>`;
+
+        projectFilter = document.getElementById("project_filter_2");
+        pTaskFilter = document.getElementById("ptask_filter_2");
+       
+        employeeFilter = document.getElementById("employee-filter-2");
+        alert(projectFilter.value+""+pTaskFilter.value+""+employeeFilter.value);
+    }
+    else {
+        return;
+    }
+            
+        
+    const parameters = new URLSearchParams({
+        "project-filter": projectFilter.value,
+        "employee-filter": employeeFilter.value,
+        "ptask-filter": pTaskFilter.value,
+        "in-month": inMonth.value,
+        "in-year": inYear.value,
+        "sorting-order": sortingOrder.value
+    });
+
+    const url = "./../api/admin/employees.php?"+parameters;
+    let response = await fetch(url);
+    data = await response.json();
+    console.log(data);
+    genTable();
+}
+
 function genTable() {
 
-    tableBody.innerHTML = "";
+    tableBody3.innerHTML = "";
     const l = data.length;
     for(let i=0; i<l; i++) {
 
@@ -224,152 +367,6 @@ function genTable() {
             }
             row.appendChild(column);
         }
-        tableBody.appendChild(row);
+        tableBody3.appendChild(row);
     }
 }
-/*var Table = document.getElementById('proj');
-var rowLength = Table.rows.length;
-var row = document.getElementById("proj");
-
-for(let i=0; i<l; i++) {
-    
-        document.getElementById("proj").rows[i].cells[0].addEventListener("click",getPrimaryTasks());;
-    
-}*/
-    
-const table = document.getElementById("proj");
-if(table.rows.length>2){
-// Loop through all rows and cells
-console.log(table.rows.length);
-for (let i = 0; i < table.rows.length; i++) {
-  for (let j = 0; j < table.rows[i].cells.length; j++) {
-    // Add onclick event to each cell
-    table.rows[i].cells[j].onclick = function () {
-      alert(`You clicked on Row ${i + 1}, Col ${j + 1}`);
-    };
-  }
-}
-}
-async function pro(x){
-        let timeArray;
-        let parameters, primaryTask;
-        tableBody2.innerHTML = "";
-        
-        let pro1=x;
-        if(pro1 != "") {
-            const employeeFilter = document.getElementById("employee-filter-2");
-            parameters = new URLSearchParams({
-                "employee-filter": employeeFilter.value
-            });
-            
-            primaryTask = document.getElementById("ptask-filter-2");
-        }
-        /*else {
-            const projectFilter = document.getElementById("project-filter-1");
-            parameters = new URLSearchParams({
-                "project-filter": projectFilter.value
-            });
-            document.getElementById("employee-filter-1").innerHTML = `<option selected value="">None</option>`;
-            primaryTask = document.getElementById("ptask-filter-1");
-        }*/
-        
-    
-        
-    
-        const url = "./../api/admin/getPrimaryTasks.php?"+parameters;
-        let response = await fetch(url);
-        data = await response.json();
-        
-        const l = data.length;
-    
-        primaryTask.innerHTML = `<option selected value="">None</option>`;
-        for(let i=0; i<l; i++) {
-            timeArray = data[i][2].split(":");
-            primaryTask.innerHTML += `<option value="${data[i][0]}">${data[i][1]} - ${timeArray[0]} Hrs ${timeArray[1]} Mins</option>`;
-            
-            const row = document.createElement("tr");
-        for(let j=0; j<1; j++) {
-
-            const column = document.createElement("td");
-            
-            /*if(j==1){
-                var button = document.createElement("input");
-                button.setAttribute("type", "submit");
-                button.setAttribute("value", "subtask");
-                //button.setAttribute("id", "proj");
-                
-
-                column.appendChild(button);
-            }*/
-                
-          if(j==0){
-                //column.textContent= data[i][1]+" - "+timeArray[0]+" Hrs "+timeArray[1]+" Mins ";
-                let data2=data[i][1]+" - "+timeArray[0]+" Hrs "+timeArray[1]+" Mins ";
-                let id_data="proj"+i;
-                const text1 = document.createElement("input");
-                text1.setAttribute("type", "text");
-                text1.setAttribute("value", data2);
-                //text1.setAttribute("id", "id_data");
-                text1.setAttribute("class", "font-16");
-                text1.setAttribute('onclick', 'pri_task(this.value)');
-                text1.setAttribute("readonly", "");
-               // text1.setAttribute("onclick","getPrimaryTasks();");*/
-                column.appendChild(text1);
-            } 
-            row.appendChild(column); 
-        }
-        
-        
-        tableBody2.appendChild(row);
-    }
-
-        }
-    
-async function pri_task(x,y) {
-    alert(x);
-   
-    
-            if(typeof x != "undefined") {
-                flow = x;
-            }
-            let projectFilter, pTaskFilter, employeeFilter;
-            /*if(flow == 0) {
-                document.getElementById("employee-filter-2").value = "";
-                document.getElementById("ptask-filter-2").innerHTML = `<option selected value="">None</option>`;
-                document.getElementById("project-filter-2").innerHTML = `<option selected value="">None</option>`;
-                
-        
-                projectFilter = document.getElementById("project-filter-1");
-                pTaskFilter = document.getElementById("ptask-filter-1");
-                employeeFilter = document.getElementById("employee-filter-1");
-            }*/
-            if(flow != "") {
-                document.getElementById("project-filter-1").value = "";
-                document.getElementById("ptask-filter-1").innerHTML = `<option selected value="">None</option>`;
-                document.getElementById("employee-filter-1").innerHTML = `<option selected value="">None</option>`;
-        
-                projectFilter = pro1;
-                pTaskFilter = x;
-                employeeFilter = document.getElementById("employee-filter-2");
-            }
-            else {
-                return;
-            }
-            
-        
-            const parameters = new URLSearchParams({
-                "project-filter": projectFilter.value,
-                "employee-filter": employeeFilter.value,
-                "ptask-filter": pTaskFilter.value,
-                "in-month": inMonth.value,
-                "in-year": inYear.value,
-                "sorting-order": sortingOrder.value
-            });
-        
-            const url = "./../api/admin/employees.php?"+parameters;
-            let response = await fetch(url);
-            data = await response.json();
-            console.log(data);
-            genTable();
-        }
-

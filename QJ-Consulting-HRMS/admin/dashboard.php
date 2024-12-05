@@ -114,23 +114,25 @@
                             </div>
                             <div class="flex flex-column">
                               <!--Project-->
-                                <select id="project-filter-2" class="input-field" onchange="getPrimaryTasks(1)" style="width: 256px; display:none">
-                                    <option selected value="">None</option>
+                                <select id="project-filter-2" class="input-field" onchange="getPrimaryTasks(1)" style="width: 256px;">
+                                    <option  value="">None</option>
 
                                 </select>
+                                <input type="hidden" id="project_filter_2" name="project_filter_2">
                             </div>
                             <div class="flex flex-column">
                                 <!--Primary Task-->
-                                <select id="ptask-filter-2" class="input-field" onchange="getData(1)" style="width: 256px;display:none;">
-                                    <option selected value="">None</option>
+                                <select id="ptask-filter-2" class="input-field" onchange="getData(1)" style="width: 256px;">
+                                    <option  value="">None</option>
                                 </select>
+                                <input type="hidden" id="ptask_filter_2" name="ptask_filter_2">
                             </div>
                         </div>
                     </div>
                     <div class="flex gap-8">
                         <div class="flex flex-column">
                             Month
-                            <select id="in-month" class="input-field" name="in-month" onchange="getData()">
+                            <select id="in-month" class="input-field" name="in-month" onchange="data_em()">
                                 <?php
                                     $currMonth = date("m");
                                     $monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -145,7 +147,7 @@
                         </div>
                         <div class="flex flex-column">
                             Year
-                            <select id="in-year" class="input-field" name="in-year" onchange="getData()">
+                            <select id="in-year" class="input-field" name="in-year" onchange="data_em()">
                                 <option value="2024" selected>2024</option>
                                 <option value="2025">2025</option>
                                 <option value="2026">2026</option>
@@ -175,6 +177,7 @@
                         <tr>
                             
                             <th style="text-wrap: nowrap;">Project Name</th>
+                            <th style="text-wrap: nowrap;">Time</th>
                         
                         </tr>
                     </thead>
@@ -189,6 +192,7 @@
                         <tr>
                             
                             <th style="text-wrap: nowrap;">Primary Task Name</th>
+                            <th style="text-wrap: nowrap;">Time</th>
                         
                         </tr>
                     </thead>
