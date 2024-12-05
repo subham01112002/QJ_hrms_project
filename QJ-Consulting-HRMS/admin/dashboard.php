@@ -113,15 +113,15 @@
                                 </select>
                             </div>
                             <div class="flex flex-column">
-                                Project
-                                <select id="project-filter-2" class="input-field" onchange="getPrimaryTasks(1)" style="width: 256px;">
+                              <!--Project-->
+                                <select id="project-filter-2" class="input-field" onchange="getPrimaryTasks(1)" style="width: 256px; display:none">
                                     <option selected value="">None</option>
 
                                 </select>
                             </div>
                             <div class="flex flex-column">
-                                Primary Task
-                                <select id="ptask-filter-2" class="input-field" onchange="getData(1)" style="width: 256px;">
+                                <!--Primary Task-->
+                                <select id="ptask-filter-2" class="input-field" onchange="getData(1)" style="width: 256px;display:none;">
                                     <option selected value="">None</option>
                                 </select>
                             </div>

@@ -117,6 +117,7 @@ async function getEmployees() {
 async function getProjects() {
     let timeArray;
     tableBody.innerHTML = "";
+    tableBody2.innerHTML="";
     const projectFilter = document.getElementById("employee-filter-2");
     document.getElementById("ptask-filter-2").innerHTML = `<option selected value="">None</option>`;
     
