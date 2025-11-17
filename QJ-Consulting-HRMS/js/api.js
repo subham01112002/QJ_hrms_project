@@ -1,4 +1,4 @@
-/*let sortingOrder = document.getElementById("sorting-order");
+let sortingOrder = document.getElementById("sorting-order");
 let inMonth = document.getElementById("in-month");
 let inYear = document.getElementById("in-year");
 
@@ -144,7 +144,7 @@ async function getProjects() {
 
             const column = document.createElement("td");
             
-            /*if(j==1){
+            if(j==1){
                 var button = document.createElement("input");
                 button.setAttribute("type", "submit");
                 button.setAttribute("value", "subtask");
@@ -180,11 +180,11 @@ async function getProjects() {
     }
     
 }
-/*var Table = document.getElementById('proj');
-var rowLength = Table.rows.length;*/
+var Table = document.getElementById('proj');
+var rowLength = Table.rows.length;
 
 
-/*var Table = document.getElementById('proj');
+var Table = document.getElementById('proj');
 var rowLength = Table.rows.length;
 var row = document.getElementById("proj");
 
@@ -370,7 +370,7 @@ function genTable() {
         tableBody3.appendChild(row);
     }
 }
-*/
+
 const employeeSelect = document.getElementById('employee-select');
     const totalTimeCell = document.getElementById('total-time');
     const projectRows = document.querySelectorAll('.project-row');
